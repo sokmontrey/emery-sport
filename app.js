@@ -1,26 +1,29 @@
-class Home extends Component{
-    constructor(){super()}
-    loadState(){
-        const button = `<button event='updateA' on='click'>ButtonClick</button>`
-        this.setVar({
-            test: button,
-            a: 1
-        })
-        this.setEvent({
-            updateA: ()=>{
-                this.setVar({
-                    a: this.var.a + 1
-                })
-            }
-        });
-    }
+const pr = new PostReader(posts);
+
+class View extends Component{
+
+}
+class Photo extends Component{
+
+}
+class Category extends Component{
+
+}
+class Topbar extends Component{ 
+    constructor(){super();}
 }
 class App{
     constructor(){
         const pageManager = new PageManager();
         pageManager.setPage({
-            home: new Home()
+            home: new Home(),
+            view: new View(),
+            photo: new Photo(),
+            category: new Category()
         })
+        pageManager.setComponent({
+            topbar: new Topbar(),
+        });
         pageManager.render();
     }
 }

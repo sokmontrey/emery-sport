@@ -9,12 +9,59 @@
     <script defer src='./posts/posts.js'></script>
     <script defer src='./postReader.js'></script>
     <script defer src='./minif/framework.js'></script>
+    <script defer src='./script/home.js'></script>
     <script defer src='./app.js'></script>
+
+    <link rel='stylesheet' href='./style/style.css'></link>
 </head>
 <body>
+    <div component='topbar'>
+        <div>
+            <p class='primary-font primary-color'>Emery Sport.</p>
+
+            <div class='emery-logo'></div>
+            
+            <button class='secondary-font light1 button3'>Photos</button>
+            <button class='secondary-font light1 button3'>About</button>
+        </div>
+    </div>
+
     <div page='home'>
-        <div var='test'></div>
-        <h1 var='a'></h1>
+        <div use='topbar'></div>
+        <div>
+            <div>
+                <p>Recent Events.</p>
+                <p>Description</p>
+                <!--<button>Show All.</button>-->
+            </div>
+
+            <div>
+            </div>
+        </div>
+
+        <div component='category_block'>
+        </div>
+
+        <div>
+            <p>Category</p>
+            <div>
+                <div></div>
+            </div>
+        </div>
+
+        <div>
+            <p>Source Code on Github</p>
+        </div>
+    </div>
+
+    <div page='view'>
+
+    </div>
+    <div page='photo'>
+
+    </div>
+    <div page='category'>
+
     </div>
 </body>
 </html>
