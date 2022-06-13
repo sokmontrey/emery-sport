@@ -1,4 +1,3 @@
-
 class PostReader{
 
     constructor(posts){ 
@@ -77,6 +76,4 @@ class PostReader{
         return details;
     }
 }
-
-
 let postReader = new PostReader(posts);
