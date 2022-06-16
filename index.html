@@ -4,64 +4,62 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Emery Sport.</title>
 
     <script defer src='./posts/posts.js'></script>
     <script defer src='./postReader.js'></script>
-    <script defer src='./minif/framework.js'></script>
-    <script defer src='./script/home.js'></script>
+    <script defer src='./minif.js'></script>
     <script defer src='./app.js'></script>
 
-    <link rel='stylesheet' href='./style/style.css'></link>
+    <link rel='stylesheet' href='./style.css'></link>
 </head>
-<body>
-    <div component='topbar'>
-        <div>
-            <p class='primary-font primary-color'>Emery Sport.</p>
-
-            <div class='emery-logo'></div>
-            
-            <button class='secondary-font light1 button3'>Photos</button>
-            <button class='secondary-font light1 button3'>About</button>
+<body class='read-text'>
+    <template template='topbar'>
+        <div class='row'>
+            <p class='primary-text primary-color f1'>EMERY SPORTS.</p>
+            <div class='logo'></div>
         </div>
-    </div>
+    </template>
 
-    <div page='home'>
+    <main page='home'>
         <div use='topbar'></div>
-        <div>
+
+        <section>
             <div>
-                <p>Recent Events.</p>
+                <p class='big-text'>Recent Events.</p>
                 <p>Description</p>
-                <!--<button>Show All.</button>-->
+                <p class='small-text'>Date</p>
             </div>
+
+            <template template='recentContainer'>
+                <div>
+                    <p value='$date'>10 May 2022</p>
+                </div>
+            </template>
 
             <div>
+                <loop loop='recentLoop'>
+                    <div use='recentContainer' 
+                         args='{"$date": "date"}'></div>
+                </loop>
             </div>
-        </div>
+        </section>
 
-        <div component='category_block'>
-        </div>
-
-        <div>
+        <section>
             <p>Category</p>
-            <div>
-                <div></div>
-            </div>
-        </div>
+            <template template='categoryContainer'>
+                <div>
+                    <p value='$type'></p>
+                    <div value='$type_image'></div>
+                </div>
+            </template>
 
-        <div>
-            <p>Source Code on Github</p>
-        </div>
-    </div>
-
-    <div page='view'>
-
-    </div>
-    <div page='photo'>
-
-    </div>
-    <div page='category'>
-
-    </div>
+            <loop loop='categoryLoop'>
+                <div use='categoryContainer'
+                     args='{"$type": "type", "$type_image": "type_image"}'></div>
+            </loop>
+        </section>
+    </main>
 </body>
 </html>
+

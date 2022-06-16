@@ -1,31 +1,20 @@
-const pr = new PostReader(posts);
-
-class View extends Component{
-
-}
-class Photo extends Component{
-
-}
-class Category extends Component{
-
-}
-class Topbar extends Component{ 
-    constructor(){super();}
-}
 class App{
-    constructor(){
-        const pageManager = new PageManager();
-        pageManager.setPage({
-            home: new Home(),
-            view: new View(),
-            photo: new Photo(),
-            category: new Category()
-        })
-        pageManager.setComponent({
-            topbar: new Topbar(),
-        });
-        pageManager.render();
-    }
-}
+	constructor(){
+		const postReader = new PostReader(posts);
+		const all_posts = postReader.getAllPost();
 
-const app = new App();
+		const recentLoop = new Loop();
+		recentLoop.each(all_posts, (value, detail_type)=>{
+			return {
+				date: `${value['type']}-${value['title']}`
+			};
+		});
+
+		const controller = new MinifControl();
+		controller.setLoops({
+			'recentLoop': recentLoop
+		})
+		controller.run();
+	}
+}
+new App();
