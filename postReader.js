@@ -12,6 +12,7 @@ class PostReader{
             if(post.length < _num_of_detail) continue;
 
             this.posts[post[0]] = {
+                id: post[0],
                 type: post[1],
                 title: post[2],
                 description: post[3],

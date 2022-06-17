@@ -11,11 +11,11 @@
     <script defer src='./minif.js'></script>
     <script defer src='./app.js'></script>
 
-    <link rel='stylesheet' href='./style.css'></link>
+    <link rel='stylesheet' href='./style/style.css'></link>
 </head>
 <body class='read-text'>
     <template template='topbar'>
-        <div class='row'>
+        <div class='row topbar'>
             <p class='primary-text primary-color f1'>EMERY SPORTS.</p>
             <div class='logo'></div>
         </div>
@@ -24,25 +24,25 @@
     <main page='home'>
         <div use='topbar'></div>
 
-        <section>
-            <div>
+        <section class='row section'>
+            <div class='f1 col recent-left-container'>
                 <p class='big-text'>Recent Events.</p>
-                <p>Description</p>
-                <p class='small-text'>Date</p>
+                <p value='recent_des'></p>
+                <p class='small-text' value='recent_date'></p>
             </div>
 
             <template template='recentContainer'>
-                <div>
-                    <p value='$date'>10 May 2022</p>
-                </div>
+                <p value='$date' class='recent-post-date'>10 May 2022</p>
             </template>
 
-            <div>
-                <loop loop='recentLoop'>
-                    <div use='recentContainer' 
-                         args='{"$date": "date"}'></div>
-                </loop>
-            </div>
+            <loop loop='recentLoop' class='row row-stretch f3'> 
+                <div use='recentContainer' 
+                     args='{"$date": "date", "picture": "picture"}'
+                     class='f1 col recent-post-container primary-text'
+                     _style='{"background-image": "backgroundImageName"}' 
+                     event='updateRecentDetail' on='mouseover'
+                     event_args='{"date": "date", "des": "des"}'></div>
+            </loop>
         </section>
 
         <section>

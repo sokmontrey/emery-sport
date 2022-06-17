@@ -1,3 +1,4 @@
+//TODO: set style from component state
 class DOM{
 	getWithClass(class_name, element=document){
 		return element.getElementsByClassName(class_name);
@@ -16,16 +17,22 @@ class DOM{
 		return element.getAttribute(attribute_name).split(' ');
 	}
 	replaceProperty(parent=document,attr_type, new_object){
-		const element = this.getWithAttribute(attr_type, null, parent)[0]
-		const object = JSON.parse(element.getAttribute('args'));
+		const element = this.getWithAttribute(attr_type, null, parent)[0];
+		if(element === undefined) return;
+		const args = element.getAttribute(attr_type);
+		const object = JSON.parse(args);
 		for(let key in object){
-			object[key] = new_object[object[key]];
+			object[key] = new_object[object[key]] || object[key];
 		}
 		element.setAttribute(attr_type, JSON.stringify(object));
 	}
 	setValue(parent=document,attr_name, value){
 		const elements = this.getWithAttribute('value', attr_name, parent);
 		for(let one of elements) one.innerHTML = value;
+	}
+	setStyle(element=null, style_name, value){
+		if(element===null) return;
+		element.style[style_name] = value;
 	}
 	hideElement(element){
 		element.style.visibility = 'hidden';
@@ -91,7 +98,13 @@ class Component extends Minif{
 				const e_elements = dom.getWithAttribute('event', e_name, one);
 				for(let each of e_elements) {
 					const e_type = each.getAttribute('on');
-					each.addEventListener(e_type, this.event[e_name]);
+					const e_args = each.getAttribute('event_args');
+					//TODO: create common method for convert props into JSON
+					//TODO: handle error with JSON 
+					const e_args_obj = JSON.parse(e_args);
+					each.addEventListener(e_type, ()=>{
+						this.event[e_name](e_args_obj || null);
+					});
 				}
 			}
 		}
@@ -139,6 +152,12 @@ class Loop extends Minif{
 	_replaceArgs(element, object){
 		dom.replaceProperty(element, 'args', object);
 	}
+	_replaceStyle(element, object){
+		dom.replaceProperty(element, '_style', object);
+	}
+	_replaceEventArgs(element, object){
+		dom.replaceProperty(element, 'event_args', object);
+	}
 	_push(object){
 		const element = new DOMParser()
 			.parseFromString(`<div>${this.inner}</div>`, 'text/xml')
@@ -146,6 +165,8 @@ class Loop extends Minif{
 
 		this._insertVariable(element, object);
 		this._replaceArgs(element, object);
+		this._replaceStyle(element, object);
+		this._replaceEventArgs(element, object);
 
 		const elements = this.getElement();
 		for(let one of elements) one.innerHTML = one.innerHTML + element.innerHTML;
@@ -216,15 +237,24 @@ class MinifControl{
 	//only if they are in the page that is rendering
 	//TODO: or just create a reset method that reset everything
 	_replaceTemplate(){
-		const all_user = dom.getWithAttribute('use', this.page_element);
+		const all_user = dom.getWithAttribute('use');
 		for(let one of all_user){
 			var template_name = one.getAttribute('use');
 			const template = dom.getWithAttribute('template', template_name);
 			one.innerHTML = template[0].innerHTML;
 		}
 	}
+	_useStyle(){
+		const all_style = dom.getWithAttribute('_style');
+		for(let one of all_style){
+			const value = one.getAttribute('_style');
+			const obj = JSON.parse(value);
+			for(let s_name in obj)
+				dom.setStyle(one, s_name, obj[s_name]);
+		}
+	}
 	_useArgsNoComponent(){
-		const all_args = dom.getWithAttribute('args', this.page_element);
+		const all_args = dom.getWithAttribute('args');
 		for(let one of all_args){
 			if(one.getAttribute('component')!==null) continue;
 			const value = one.getAttribute('args');
@@ -239,10 +269,12 @@ class MinifControl{
 	}
 	_hideAllPage(){
 		const elements = dom.getWithAttribute('page');
+		if(elements===undefined) return;
 		for(let one of elements) dom.hideElement(one);
 	}
 	_showCurrentPage(){
 		const element = this.getCurrentElement();
+		if(element===undefined) return;
 		dom.showElement(element);
 	}
 	run(){
@@ -253,5 +285,6 @@ class MinifControl{
 		this._replaceTemplate();
 		this._runComponent();
 		this._useArgsNoComponent();
+		this._useStyle();
 	}
 }

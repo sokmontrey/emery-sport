@@ -1,45 +1,102 @@
-@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Koulen&family=Rubik:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Koulen&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-:root{
-	--primary-color: #EE6C4D; 
-	--dark-color: #293241;
-	--light1-color:#9D9D9D;
-	--light2-color:#E1E1E1;
-	--light3-color:#F0F0F0;
-	--light4-color:#FFFFFF;
-	--background-color: var(--light3-color); 
+@import url('./home.css');
 
-	--primary-font: 'Koulen', cursive;
-	--secondary-font: 'Rubik', sans-serif;
-	--read-font: 'Hind Siliguri', sans-serif;
-
+* {
+  padding: 0px;
+  margin: 0px;
 }
 
-*{
-	padding: 0px;
-	margin: 0px;
+:root {
+  font-size: 16px;
+
+  --primary-color: #ee6c4d;
+  --dark-color: #293241;
+  --background-color: #dfdfdf;
+  --light1-color: #ffffff;
+  --light2-color: #f0f0f0;
+  --light3-color: #e1e1e1;
+  --light4-color: #bfbfbf;
+  --light5-color: #4e4e4e;
+
+  --primary-font: "Koulen", cursive;
+  --style-font: "Rubik", sans-serif;
+  --read-font: "Hind Siliguri", sans-serif;
+
+  --padding: 0.9rem;
+  --round: 1.8rem;
+}
+body {
+  background-color: var(--background-color);
+}
+/*----color----*/
+.primary-color {
+  color: var(--primary-color);
+}
+/*----text----*/
+.primary-text {
+  font-family: var(--primary-font);
+  font-size: 1.1rem;
+  font-weight: normal;
+}
+.read-text {
+  font-family: var(--read-font);
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--light5-color);
+}
+.big-text {
+  font-family: var(--style-font);
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: var(--dark-color);
+}
+.small-text {
+  font-family: var(--primary-font);
+  font-weight: normal
+  font-size: 0.88rem;
+  color: var(--light4-color);
 }
 
-body{
-	background-color: var(--background-color);
+/*----flex----*/
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.row-stretch{
+  align-items: stretch;
+}
+.col{
+  display: flex;
+  flex-direction: column;
 }
 
-.primary-color{ color:var(--primary-color); }
-.dark{ color:var(--dark-color); }
-.light1{ color:var(--light1-color); }
-.light2{ color:var(--light2-color); }
-.light3{ color:var(--light3-color); }
-.light4{ color:var(--light4-color); }
+.f1 {
+  flex: 1;
+}
+.f2 {
+  flex: 2;
+}
+.f3{
+  flex: 3;
+}
 
-.primary-font{
-	font-family: var(--primary-font);
-	font-weight: normal;
+/*----common----*/
+.section{
+  padding: calc(var(--padding)*2) calc(var(--padding) * 4);
+  height: 50vh;
+  align-items: stretch;
 }
-.secondary-font{
-	font-family: var(--secondary-font);
-	font-weight: bold;
+.logo {
+  background-image: url("../media/emerylogo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 2.5rem;
+  height: 2.5rem;
 }
-.button3{
-	border:none;
-	background: transparent;
+.topbar{
+  padding:var(--padding);
 }
