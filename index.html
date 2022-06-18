@@ -37,29 +37,37 @@
 
             <loop loop='recentLoop' class='row row-stretch f3'> 
                 <div use='recentContainer' 
-                     args='{"$date": "date", "picture": "picture"}'
+                     args='{"$date": "date","$id": "id" }'
                      class='f1 col recent-post-container primary-text'
                      _style='{"background-image": "backgroundImageName"}' 
-                     event='updateRecentDetail' on='mouseover'
-                     event_args='{"date": "date", "des": "des"}'></div>
+                     event='{"mouseover": "updateRecentDetail", "click":"viewPost"}'
+                     event_args='{"updateRecentDetail":{"date": "date", "des": "des"} , "viewPost": {"id": "id"}}'></div>
             </loop>
         </section>
 
-        <section>
-            <p>Category</p>
+        <div class='hori-line'></div>
+
+        <section class='col center section'>
+            <p class='primary-color big-text'>Category</p>
             <template template='categoryContainer'>
-                <div>
-                    <p value='$type'></p>
-                    <div value='$type_image'></div>
+                <div style='height: 100%;' class='col'>
+                    <p value='$type' class='f1 primary-text'></p>
                 </div>
             </template>
 
-            <loop loop='categoryLoop'>
+            <div loop='categoryLoop'>
                 <div use='categoryContainer'
-                     args='{"$type": "type", "$type_image": "type_image"}'></div>
-            </loop>
+                     args='{"$type": "type", "$type_image": "type_image"}'
+                     class='sports-type-container'
+                     _style='{"background-image": "type_image_url"}'
+                     event='{"click": "viewCategory"}'
+                     event_args='{"viewCategory": {"category": "type"}}'></div>
+            </div>
         </section>
     </main>
+
+    <page page='view'>
+    </page>
 </body>
 </html>
 

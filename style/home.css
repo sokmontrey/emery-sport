@@ -11,7 +11,7 @@
   justify-content: flex-end;
   border-radius: calc(var(--round) * 0.7);
   flex: 1;
-  transition: all ease-in-out 0.8s;
+  transition: all ease-in-out 0.5s;
 }
 .recent-post-container:hover {
   flex: 10;
@@ -20,4 +20,30 @@
   margin: var(--padding);
   color: var(--light4-color);
   mix-blend-mode: difference;
+}
+
+.sports-type-container {
+  float: left;
+  justify-content: stretch;
+  width: 7rem;
+  height: 7rem;
+
+  margin: var(--padding);
+  padding: var(--padding);
+  border-radius: var(--round);
+
+  color: var(--dark-color);
+  background-color: var(--light1-color);
+  background-size: 150%;
+  background-repeat: no-repeat;
+  box-shadow: 0px 0px 6.25rem rgba(0, 0, 0, 0.01);
+  transition: all ease-in-out 0.3s;
+}
+.sports-type-container:hover {
+  transform: translate(0, -0.3rem);
+  width: 7.2rem;
+  height: 7.2rem;
+  background-size: 100%;
+  background-position: center;
+  color: var(--light1-color);
 }

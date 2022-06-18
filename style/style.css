@@ -73,6 +73,10 @@ body {
   flex-direction: column;
 }
 
+.col.center{
+  align-items: center;
+}
+
 .f1 {
   flex: 1;
 }
@@ -81,6 +85,13 @@ body {
 }
 .f3{
   flex: 3;
+}
+
+/*----element---*/
+.hori-line{
+  width: 100vw;
+  border: none;
+  border-bottom: solid 0.12rem var(--light4-color);
 }
 
 /*----common----*/

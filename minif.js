@@ -22,7 +22,12 @@ class DOM{
 		const args = element.getAttribute(attr_type);
 		const object = JSON.parse(args);
 		for(let key in object){
-			object[key] = new_object[object[key]] || object[key];
+			if(typeof object[key] !== "object")
+				object[key] = new_object[object[key]] || object[key];
+			else{
+				for(let key2 in object[key])
+					object[key][key2] = new_object[object[key][key2]] || object[key][key2];
+			}
 		}
 		element.setAttribute(attr_type, JSON.stringify(object));
 	}
@@ -94,17 +99,21 @@ class Component extends Minif{
 	_attachEvent(){
 		const elements = this.getElement();
 		for(let one of elements){
-			for(let e_name in this.event){
-				const e_elements = dom.getWithAttribute('event', e_name, one);
-				for(let each of e_elements) {
-					const e_type = each.getAttribute('on');
-					const e_args = each.getAttribute('event_args');
-					//TODO: create common method for convert props into JSON
-					//TODO: handle error with JSON 
-					const e_args_obj = JSON.parse(e_args);
-					each.addEventListener(e_type, ()=>{
-						this.event[e_name](e_args_obj || null);
-					});
+			const e_element = dom.getWithAttribute('event', null, one);
+			for(let each of e_element){
+				const e = each.getAttribute('event'),
+					e_obj = JSON.parse(e),
+					e_args = each.getAttribute('event_args'),
+					e_args_obj = JSON.parse(e_args);
+
+				for(let type in e_obj){
+					const listener = this.event[e_obj[type]];
+					listener 
+						? each.addEventListener(type, ()=>{
+							listener(e_args_obj[e_obj[type]]);
+						}) 
+						: null;
+						//TODO: create error handling 
 				}
 			}
 		}
