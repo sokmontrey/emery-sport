@@ -29,6 +29,31 @@ class Home extends Component{
 		}
 	}
 }
+class View extends Component{
+	constructor({onHome}){
+		super();
+		this.setName('view');
+		this.setType('page');
+		this.onHome = onHome;
+	}
+	onValueChange(){
+		const id = this.value.id;
+		if(id === null) return;
+
+		const post = postReader.getOnePost(id);
+		this.setValue({
+			event_title: post['title'],
+			event_description: post['description'],
+			event_date: post['createAt'].toLocaleDateString(),
+		}, false);
+
+	}
+	setEvent(){
+		return{
+			onHome: ()=>{this.onHome()}
+		}
+	}
+}
 
 class App{
 	constructor(){
@@ -43,7 +68,7 @@ class App{
 				id: value['id'],
 				des: value['description'],
 				date: value['createAt'].toLocaleDateString(),
-				backgroundImageName: `url(./media/${value['id']}.png)`
+				backgroundImageName: `url(./media/${value['id']}/1.jpg)`
 			};
 		});
 
@@ -60,23 +85,36 @@ class App{
 				type_image_url: `url(./media/${v}.png)`
 			}
 		});
+		const postPhotoLoop = new Loop();
+		postPhotoLoop.each(0, null);
 
 		const controller = new MinifControl();
+		controller.setPages(['home', 'view']);
 		controller.setComponents({
-			'home': new Home({
+			home: new Home({
 				onViewPost: (id)=>{
-					console.log(id);
-					//TODO:
+					const post = postReader.getOnePost(id);
+					postPhotoLoop.each(post['num_img'], (value, index)=>{
+						return {
+							image_url: `url(./media/${id}/${value+1}.jpg)`
+						}
+					})
+					controller.changePage('view', {id: id});
 				},
 				onViewCategory: (category)=>{
 					console.log(category)
 				}
-				
+			}),
+			view: new View({
+				onHome: ()=>{
+					controller.changePage('home');
+				}
 			})
 		})
 		controller.setLoops({
 			'recentLoop': recentLoop,
-			'categoryLoop': categoryLoop
+			'categoryLoop': categoryLoop,
+			'postPhotoLoop': postPhotoLoop,
 		})
 		controller.run();
 	}

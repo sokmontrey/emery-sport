@@ -1,0 +1,28 @@
+#view-body {
+  padding: var(--padding) calc(var(--padding) * 15);
+}
+.post-photo-container {
+  overflow-y: scroll;
+  height: 80vh;
+  text-align: center;
+}
+.post-photo {
+  border-radius: calc(var(--round) * 0.7);
+  margin: var(--padding);
+  margin-bottom: 0;
+  width: 30vw;
+  height: 30vw;
+  background-color: var(--light4-color);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.post-photo:active {
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-size: contain;
+}

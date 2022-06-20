@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Koulen&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
-@import url('./home.css');
+@import url("./home.css");
+@import url("./view.css");
 
 * {
   padding: 0px;
@@ -29,6 +30,25 @@
 body {
   background-color: var(--background-color);
 }
+::-webkit-scrollbar {
+  width: 0.1rem;
+  height: 0.1rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--light2-color);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--light4-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 /*----color----*/
 .primary-color {
   color: var(--primary-color);
@@ -51,29 +71,50 @@ body {
   font-size: 1.6rem;
   color: var(--dark-color);
 }
+.bigger-text {
+  font-family: var(--style-font);
+  font-weight: bold;
+  font-size: 2.4rem;
+  color: var(--dark-color);
+}
 .small-text {
   font-family: var(--primary-font);
-  font-weight: normal
+  font-weight: normal;
   font-size: 0.88rem;
   color: var(--light4-color);
 }
-
+/*----button----*/
+.button3 {
+  border: none;
+  background: transparent;
+  padding: 0 var(--padding);
+  font-family: var(--primary-font);
+  color: var(--light5-color);
+  transition: all ease-in-out 0.2s;
+}
+.button3:hover {
+  transform: translate(0, -0.2rem);
+}
 /*----flex----*/
+
 .row {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-.row-stretch{
+.row.top {
+  align-items: flex-start;
+}
+.row-stretch {
   align-items: stretch;
 }
-.col{
+.col {
   display: flex;
   flex-direction: column;
 }
 
-.col.center{
+.col.center {
   align-items: center;
 }
 
@@ -83,22 +124,24 @@ body {
 .f2 {
   flex: 2;
 }
-.f3{
+.f3 {
   flex: 3;
 }
 
 /*----element---*/
-.hori-line{
+.hori-line {
   width: 100vw;
   border: none;
   border-bottom: solid 0.12rem var(--light4-color);
 }
 
 /*----common----*/
-.section{
-  padding: calc(var(--padding)*2) calc(var(--padding) * 4);
+.section {
   height: 50vh;
   align-items: stretch;
+}
+.padding {
+  padding: calc(var(--padding) * 2) calc(var(--padding) * 4);
 }
 .logo {
   background-image: url("../media/emerylogo.png");
@@ -108,6 +151,6 @@ body {
   width: 2.5rem;
   height: 2.5rem;
 }
-.topbar{
-  padding:var(--padding);
+.topbar {
+  padding: var(--padding);
 }

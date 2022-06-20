@@ -24,7 +24,7 @@
     <main page='home'>
         <div use='topbar'></div>
 
-        <section class='row section'>
+        <section class='row section padding'>
             <div class='f1 col recent-left-container'>
                 <p class='big-text'>Recent Events.</p>
                 <p value='recent_des'></p>
@@ -35,19 +35,19 @@
                 <p value='$date' class='recent-post-date'>10 May 2022</p>
             </template>
 
-            <loop loop='recentLoop' class='row row-stretch f3'> 
+            <div loop='recentLoop' class='row row-stretch f3'> 
                 <div use='recentContainer' 
                      args='{"$date": "date","$id": "id" }'
                      class='f1 col recent-post-container primary-text'
                      _style='{"background-image": "backgroundImageName"}' 
                      event='{"mouseover": "updateRecentDetail", "click":"viewPost"}'
                      event_args='{"updateRecentDetail":{"date": "date", "des": "des"} , "viewPost": {"id": "id"}}'></div>
-            </loop>
+            </div>
         </section>
 
         <div class='hori-line'></div>
 
-        <section class='col center section'>
+        <section class='col center padding'>
             <p class='primary-color big-text'>Category</p>
             <template template='categoryContainer'>
                 <div style='height: 100%;' class='col'>
@@ -66,8 +66,26 @@
         </section>
     </main>
 
-    <page page='view'>
-    </page>
+    <div page='view'>
+        <div class='row'>
+            <button class='button3' event='{"click": "onHome"}'>back</button>
+            <div use='topbar' class='f1'></div>
+        </div>
+
+        <div class='row padding top' id='view-body'>
+            <div class='col f1'>
+                <p class='bigger-text' value='event_title'>Event Title</p>
+                <p class='read-text'value='event_description'>Description</p>
+                <p class='small-text'value='event_date'>21 May 2022</p>
+            </div>
+            <!--TODO-->
+            <div class='f2 post-photo-container'>
+                <loop loop='postPhotoLoop' class='col center'>
+                    <div class='post-photo' _style='{"background-image": "image_url"}'></div>
+                </loop>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 

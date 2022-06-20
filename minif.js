@@ -108,9 +108,12 @@ class Component extends Minif{
 
 				for(let type in e_obj){
 					const listener = this.event[e_obj[type]];
+					const args = e_args!==null
+						?e_args_obj[e_obj[type]]
+						:null;
 					listener 
 						? each.addEventListener(type, ()=>{
-							listener(e_args_obj[e_obj[type]]);
+							listener(args);
 						}) 
 						: null;
 						//TODO: create error handling 
@@ -118,7 +121,7 @@ class Component extends Minif{
 			}
 		}
 	}
-	_updateValue(){
+	_updateValue(isOnValueChange){
 		const elements = this.getElement();
 		for(let val_name in this.value){
 			for(let one of elements){
@@ -126,13 +129,15 @@ class Component extends Minif{
 				for(let each of val_elements) each.innerHTML = this.value[val_name];
 			}
 		}
+		isOnValueChange ? this.onValueChange() : null;
 	}
 	setEvent(){ return null; }
 	load(){return null}
-	setValue(new_val){
+	setValue(new_val, isOnValueChange=true){
 		this.value = {...this.value, ...new_val}
-		if(this.is_render) this._updateValue();
+		if(this.is_render) this._updateValue(isOnValueChange);
 	}
+	onValueChange(){}
 }
 
 class Loop extends Minif{
@@ -197,8 +202,12 @@ class Loop extends Minif{
 				this._push(callback(i, i));
 		}
 	}
+	is_stored_inner_html = false;
 	render(){
-		this._storeInnerHTML();
+		if(!this.is_stored_inner_html){
+			this._storeInnerHTML();
+			this.is_stored_inner_html = true;
+		}
 		this._removeInnerHTML();
 		//TODO: use switch
 		if(this.iteration_type === 'each')
@@ -218,9 +227,13 @@ class MinifControl{
 	}
 	setLoops(loops={}){
 		this.loops = loops;
+		for(let name in this.loops)
+			this.loops[name].setName(name);
 	}
 	setComponents(components=[]){
 		this.components = components;
+		for(let name in this.components)
+			this.components[name].setName(name);
 	}
 	setPages(pages=[]){
 		this.pages = pages;
@@ -232,13 +245,11 @@ class MinifControl{
 
 	_runLoop(){
 		for(let name in this.loops){
-			this.loops[name].setName(name);
 			this.loops[name].render();
 		}
 	}
 	_runComponent(){
 		for(let name in this.components){
-			this.components[name].setName(name);
 			this.components[name].render();
 		}
 	}
@@ -272,9 +283,11 @@ class MinifControl{
 				dom.setValue(one, v_name, obj[v_name]);
 		}
 	}
-	changePage(new_page){
+	changePage(new_page, props=null){
 		this.current_page = new_page;
 		this.run();
+		if(props===null) return;
+		this.components[this.current_page].setValue(props);
 	}
 	_hideAllPage(){
 		const elements = dom.getWithAttribute('page');

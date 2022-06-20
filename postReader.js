@@ -1,7 +1,7 @@
 class PostReader{
 
     constructor(posts){ 
-        var _num_of_detail = 5;
+        var _num_of_detail = 6;
 
         let removed_break = this._removeBreak(posts);
         let splited_post = this._splitPost(removed_break);
@@ -16,7 +16,8 @@ class PostReader{
                 type: post[1],
                 title: post[2],
                 description: post[3],
-                createAt: new Date(post[4])
+                createAt: new Date(post[4]),
+                num_img: post[5]
             };
         }
     }
