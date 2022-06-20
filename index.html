@@ -21,13 +21,13 @@
         </div>
     </template>
 
-    <main page='home'>
+    <main page='home'> 
         <div use='topbar'></div>
 
         <section class='row section padding'>
             <div class='f1 col recent-left-container'>
                 <p class='big-text'>Recent Events.</p>
-                <p value='recent_des'></p>
+                <p class='read-text description'value='recent_des'></p>
                 <p class='small-text' value='recent_date'></p>
             </div>
 
@@ -75,7 +75,7 @@
         <div class='row padding top' id='view-body'>
             <div class='col f1'>
                 <p class='bigger-text' value='event_title'>Event Title</p>
-                <p class='read-text'value='event_description'>Description</p>
+                <p class='read-text description'value='event_description'>Description</p>
                 <p class='small-text'value='event_date'>21 May 2022</p>
             </div>
             <!--TODO-->
@@ -85,6 +85,22 @@
                 </loop>
             </div>
         </div>
+    </div>
+
+    <div page='category'>
+        <div class='row'>
+            <button class='button3' event='{"click": "onHome"}'>back</button>
+            <div use='topbar' class='f1'></div>
+        </div>
+        <div loop='categoryPostLoop' class='category-post-container'>
+            <div _style='{"background-image": "image_url"}'
+                class='category-post'
+                 event='{"click": "viewPost"}'
+                 event_args='{"viewPost": {"id": "id"}}'>
+                <p value='category_post_date' class='category-post-date primary-text'></p>
+            </div>
+        </div>
+        <!--<p value='message'></p>-->
     </div>
 </body>
 </html>

@@ -2,6 +2,7 @@
 
 @import url("./home.css");
 @import url("./view.css");
+@import url("./category.css");
 
 * {
   padding: 0px;
@@ -56,13 +57,13 @@ body {
 /*----text----*/
 .primary-text {
   font-family: var(--primary-font);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: normal;
 }
 .read-text {
   font-family: var(--read-font);
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   color: var(--light5-color);
 }
 .big-text {
@@ -80,7 +81,7 @@ body {
 .small-text {
   font-family: var(--primary-font);
   font-weight: normal;
-  font-size: 0.88rem;
+  font-size: 1rem;
   color: var(--light4-color);
 }
 /*----button----*/
@@ -91,6 +92,7 @@ body {
   font-family: var(--primary-font);
   color: var(--light5-color);
   transition: all ease-in-out 0.2s;
+  font-size: 1rem;
 }
 .button3:hover {
   transform: translate(0, -0.2rem);
@@ -142,6 +144,9 @@ body {
 }
 .padding {
   padding: calc(var(--padding) * 2) calc(var(--padding) * 4);
+}
+.description {
+  padding: var(--padding) 0px;
 }
 .logo {
   background-image: url("../media/emerylogo.png");

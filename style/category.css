@@ -1,0 +1,26 @@
+.category-post-container {
+  display: block;
+  padding: var(--padding) calc(var(--padding) * 5);
+}
+.category-post {
+  width: 12rem;
+  height: 12rem;
+  border-radius: var(--round);
+  background-color: var(--light4-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  float: left;
+  transition: all ease-in-out 0.2s;
+}
+.category-post:hover {
+  transform: translate(0, -0.2rem);
+}
+.category-post-date {
+  margin: var(--padding);
+  color: var(--light4-color);
+  mix-blend-mode: difference;
+}

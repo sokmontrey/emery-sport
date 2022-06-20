@@ -54,6 +54,33 @@ class View extends Component{
 		}
 	}
 }
+class Category extends Component{
+	constructor({onHome, onViewPost}){
+		super();
+		this.setName('category');
+		this.setType('page');
+		this.onHome = onHome;
+		this.onViewPost = onViewPost;
+	}
+	load(){ }
+	onValueChange(){
+		const type = this.value.type;
+		const posts = postReader.getAllWithDetailOf('type', type);
+		if(posts.length < 1) {
+			this.setValue({message: `Emery has no sports event in ${type}`}, false);
+			return ;
+		}
+		this.setValue({message: `There are ${posts.length} matches of ${type} from Emery`}, false);
+	}
+	setEvent(){
+		return{
+			onHome: ()=>{this.onHome()},
+			viewPost: ({id})=>{
+				this.onViewPost(id)
+			}
+		}
+	}
+}
 
 class App{
 	constructor(){
@@ -88,8 +115,11 @@ class App{
 		const postPhotoLoop = new Loop();
 		postPhotoLoop.each(0, null);
 
+		const categoryPostLoop = new Loop();
+		categoryPostLoop.each(0, null);
+
 		const controller = new MinifControl();
-		controller.setPages(['home', 'view']);
+		controller.setPages(['home', 'view', 'category']);
 		controller.setComponents({
 			home: new Home({
 				onViewPost: (id)=>{
@@ -101,13 +131,35 @@ class App{
 					})
 					controller.changePage('view', {id: id});
 				},
-				onViewCategory: (category)=>{
-					console.log(category)
+				onViewCategory: (type)=>{
+					const posts = postReader.getAllWithDetailOf('type', type);
+					categoryPostLoop.each(posts, (value, index)=>{
+						return {
+							category_post_date: value['createAt'].toLocaleDateString(),
+							image_url: `url(./media/${value['id']}/1.jpg)`,
+							id: value['id']
+						}
+					});
+					controller.changePage('category', {type: type});
 				}
 			}),
 			view: new View({
 				onHome: ()=>{
 					controller.changePage('home');
+				}
+			}),
+			category: new Category({
+				onHome: ()=>{
+					controller.changePage('home');
+				},
+				onViewPost: (id)=>{
+					const post = postReader.getOnePost(id);
+					postPhotoLoop.each(post['num_img'], (value, index)=>{
+						return {
+							image_url: `url(./media/${id}/${value+1}.jpg)`
+						}
+					})
+					controller.changePage('view', {id: id});
 				}
 			})
 		})
@@ -115,8 +167,14 @@ class App{
 			'recentLoop': recentLoop,
 			'categoryLoop': categoryLoop,
 			'postPhotoLoop': postPhotoLoop,
+			'categoryPostLoop': categoryPostLoop
 		})
 		controller.run();
 	}
 }
 new App();
+
+
+
+
+
